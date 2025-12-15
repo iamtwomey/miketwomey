@@ -42,17 +42,33 @@ document.addEventListener('DOMContentLoaded', () => {
             const width = options.width || 400;
             const height = options.height || 300;
 
+            // Set dimensions first
+            winEl.style.width = width + 'px';
+            winEl.style.height = height + 'px';
+            winEl.style.zIndex = ++zIndexCounter;
+
+            // Append to DOM immediately to get layout context
+            this.desktop.appendChild(winEl);
+            this.windows.push(winEl);
+
             if (options.center) {
-                winEl.style.left = (window.innerWidth / 2 - width / 2) + 'px';
-                winEl.style.top = (window.innerHeight / 2 - height / 2) + 'px';
+                // Initial guess
+                let left = window.innerWidth / 2 - width / 2;
+                let top = window.innerHeight / 2 - height / 2;
+                winEl.style.left = left + 'px';
+                winEl.style.top = top + 'px';
+
+                // Correction for offset parents (e.g. padding on #desktop)
+                const rect = winEl.getBoundingClientRect();
+                const targetX = window.innerWidth / 2 - width / 2;
+                const targetY = window.innerHeight / 2 - height / 2;
+
+                winEl.style.left = (left - (rect.left - targetX)) + 'px';
+                winEl.style.top = (top - (rect.top - targetY)) + 'px';
             } else {
                 winEl.style.left = (options.x || 50 + (this.windows.length * 20)) + 'px';
                 winEl.style.top = (options.y || 50 + (this.windows.length * 20)) + 'px';
             }
-
-            winEl.style.width = width + 'px';
-            winEl.style.height = height + 'px';
-            winEl.style.zIndex = ++zIndexCounter;
 
             const iconSrc = options.icon || 'assets/default-icon.png';
 
@@ -74,9 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
-
-            this.desktop.appendChild(winEl);
-            this.windows.push(winEl);
 
             // Create Taskbar Item
             const taskItem = document.createElement('div');
@@ -174,19 +187,20 @@ document.addEventListener('DOMContentLoaded', () => {
         startDrag(e, winEl) {
             this.isDragging = true;
             this.dragTarget = winEl;
-            const rect = winEl.getBoundingClientRect();
-            this.dragOffsetX = e.clientX - rect.left;
-            this.dragOffsetY = e.clientY - rect.top;
+            this.initialMouseX = e.clientX;
+            this.initialMouseY = e.clientY;
+            this.initialWinLeft = parseFloat(winEl.style.left) || 0;
+            this.initialWinTop = parseFloat(winEl.style.top) || 0;
         }
 
         onMouseMove(e) {
             if (!this.isDragging || !this.dragTarget) return;
 
-            const x = e.clientX - this.dragOffsetX;
-            const y = e.clientY - this.dragOffsetY;
+            const deltaX = e.clientX - this.initialMouseX;
+            const deltaY = e.clientY - this.initialMouseY;
 
-            this.dragTarget.style.left = x + 'px';
-            this.dragTarget.style.top = y + 'px';
+            this.dragTarget.style.left = (this.initialWinLeft + deltaX) + 'px';
+            this.dragTarget.style.top = (this.initialWinTop + deltaY) + 'px';
         }
 
         onMouseUp() {
