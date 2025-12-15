@@ -23,7 +23,6 @@
         <div id="taskbar">
             <button id="start-button">
                 <img src="assets/start-icon.png" alt="Start" />
-                <span>Start</span>
             </button>
             <div id="task-list">
                 <!-- Active tasks -->
@@ -79,12 +78,15 @@
                 </div>
             </div>
             <div class="start-footer">
-                <button>Turn Off Computer</button>
+                <button id="turn-off-button">Turn Off Computer</button>
             </div>
         </div>
     </div>
 
     <script src="js/script.js"></script>
+    <div id="shutdown-overlay">
+        <p>It is now safe to turn off your computer.</p>
+    </div>
 </body>
 
 </html>

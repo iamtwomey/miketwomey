@@ -248,4 +248,19 @@ document.addEventListener('DOMContentLoaded', () => {
             startMenu.classList.add('hidden');
         }
     });
+
+    // Shutdown Functionality
+    const turnOffBtn = document.getElementById('turn-off-button');
+    const shutdownOverlay = document.getElementById('shutdown-overlay');
+
+    turnOffBtn.addEventListener('click', () => {
+        // Try to close the tab
+        window.close();
+
+        // If not closed (which is likely in modern browsers unless script-opened), show overlay
+        setTimeout(() => {
+            shutdownOverlay.classList.add('active');
+            // Hide everything else or just overlay handles it with z-index
+        }, 100);
+    });
 });
