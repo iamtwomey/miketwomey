@@ -39,10 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const winEl = document.createElement('div');
             winEl.className = 'window active';
             winEl.id = id;
-            winEl.style.left = (options.x || 50 + (this.windows.length * 20)) + 'px';
-            winEl.style.top = (options.y || 50 + (this.windows.length * 20)) + 'px';
-            winEl.style.width = (options.width || 400) + 'px';
-            winEl.style.height = (options.height || 300) + 'px';
+            const width = options.width || 400;
+            const height = options.height || 300;
+
+            if (options.center) {
+                winEl.style.left = (window.innerWidth / 2 - width / 2) + 'px';
+                winEl.style.top = (window.innerHeight / 2 - height / 2) + 'px';
+            } else {
+                winEl.style.left = (options.x || 50 + (this.windows.length * 20)) + 'px';
+                winEl.style.top = (options.y || 50 + (this.windows.length * 20)) + 'px';
+            }
+
+            winEl.style.width = width + 'px';
+            winEl.style.height = height + 'px';
             winEl.style.zIndex = ++zIndexCounter;
 
             const iconSrc = options.icon || 'assets/default-icon.png';
@@ -190,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.wm = wm; // Expose to global scope for debugging/icons
 
     // Test Window
-    wm.createWindow('Welcome', '<h1>Welcome to Windows XP</h1><p>This is a pure HTML/CSS/JS recreation.</p>', { icon: 'assets/notepad.png' });
+    wm.createWindow('Welcome', '<h1>Welcome to Windows XP</h1><p>This is a pure HTML/CSS/JS recreation.</p>', { icon: 'assets/notepad.png', center: true });
 
     // Desktop Icons
     function createDesktopIcon(name, iconSrc, onOpen) {
