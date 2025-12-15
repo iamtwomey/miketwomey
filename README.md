@@ -1,2 +1,0 @@
-# miketwomey
-Mike Twomey

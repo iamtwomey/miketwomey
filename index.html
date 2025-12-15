@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Windows XP</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="desktop">
+        <!-- Desktop Icons will go here -->
+        <div class="desktop-icons">
+            <!-- Icons injected by JS or static -->
+        </div>
+
+        <!-- Windows will go here -->
+        <div id="window-area"></div>
+
+        <!-- Taskbar -->
+        <div id="taskbar">
+            <button id="start-button">
+                <img src="assets/start-icon.png" alt="Start" />
+                <span>Start</span>
+            </button>
+            <div id="task-list">
+                <!-- Active tasks -->
+            </div>
+            <div id="tray">
+                <div id="clock">12:00 PM</div>
+            </div>
+        </div>
+
+        <!-- Start Menu -->
+        <div id="start-menu" class="hidden">
+            <div class="start-header">
+                <img src="assets/user-avatar.png" alt="User" class="user-avatar">
+                <span class="username">User</span>
+            </div>
+            <div class="start-body">
+                <div class="start-left">
+                    <div class="start-item"
+                        onclick="wm.createWindow('Internet Explorer', '<h1>Internet Explorer</h1><p>Cannot connect to the internet.</p>', {icon: 'assets/ie.png'})">
+                        <img src="assets/ie.png" alt="IE">
+                        <span>Internet</span>
+                    </div>
+                    <div class="start-item"
+                        onclick="wm.createWindow('Outlook Express', '<h1>Outlook Express</h1><p>No new mail.</p>', {icon: 'assets/outlook.png'})">
+                        <img src="assets/outlook.png" alt="Email">
+                        <span>E-mail</span>
+                    </div>
+                    <div style="flex-grow:1"></div>
+                    <div class="start-item"
+                        onclick="wm.createWindow('Notepad', '<textarea style=\'width:100%;height:100%;border:none;resize:none;font-family:monospace;\'></textarea>', {icon: 'assets/notepad.png'})">
+                        <img src="assets/notepad.png" alt="Notepad">
+                        <span>Notepad</span>
+                    </div>
+                </div>
+                <div class="start-right">
+                    <div class="start-item">
+                        <img src="assets/my-documents.png" alt="Docs">
+                        <span>My Documents</span>
+                    </div>
+                    <div class="start-item">
+                        <img src="assets/my-computer.png" alt="Comp">
+                        <span>My Computer</span>
+                    </div>
+                    <div class="start-item">
+                        <img src="assets/network.png" alt="Net">
+                        <span>My Network Places</span>
+                    </div>
+                    <div style="flex-grow:1"></div>
+                    <div class="start-item">
+                        <img src="assets/control-panel.png" alt="CP">
+                        <span>Control Panel</span>
+                    </div>
+                </div>
+            </div>
+            <div class="start-footer">
+                <button>Turn Off Computer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
